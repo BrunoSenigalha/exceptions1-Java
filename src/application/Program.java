@@ -18,39 +18,36 @@ public class Program {
 
         System.out.print("Check-in date (dd/mm/yyyy): ");
         String checkInInput = sc.next();
-        LocalDate checkIn = LocalDate.parse(checkInInput,fmt);
+        LocalDate checkIn = LocalDate.parse(checkInInput, fmt);
 
         System.out.print("Check-out date (dd/mm/yyyy): ");
         String checkOutInput = sc.next();
-        LocalDate checkOut = LocalDate.parse(checkOutInput,fmt);
+        LocalDate checkOut = LocalDate.parse(checkOutInput, fmt);
 
-        if (!checkOut.isAfter(checkIn)){
+        if (!checkOut.isAfter(checkIn)) {
             System.out.println("Error in reservation: Check-out date must be after check-in date");
-        }
-        else {
+        } else {
             Reservation reservation = new Reservation(number, checkIn, checkOut);
             System.out.println("Reservation: " + reservation);
 
             System.out.println();
             System.out.print("Check-in date (dd/mm/yyyy): ");
             checkInInput = sc.next();
-            checkIn = LocalDate.parse(checkInInput,fmt);
+            checkIn = LocalDate.parse(checkInInput, fmt);
 
             System.out.print("Check-out date (dd/mm/yyyy): ");
             checkOutInput = sc.next();
-            checkOut = LocalDate.parse(checkOutInput,fmt);
+            checkOut = LocalDate.parse(checkOutInput, fmt);
 
-            LocalDate now = LocalDate.now();
-            if (checkIn.isBefore(now) || checkOut.isBefore(now)) {
-                System.out.println("Error in reservation: Check-out date must be after check-in date");
-            }
-            else if (!checkOut.isAfter(checkIn)){
-                System.out.println("Error in reservation: Check-out date must be after check-in date");
+            String error = reservation.updateDates(checkIn, checkOut);
+            if (error != null) {
+                System.out.println("Error in reservation: " + error);
             }
             else {
-                reservation.updateDates(checkIn, checkOut);
                 System.out.println("Updated Reservation: " + reservation);
+
             }
+
         }
         sc.close();
     }
